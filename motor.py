@@ -244,7 +244,22 @@ class motor(Node):
                     self.mission_get = True
                     self.mainbucket_state = 4
                 if np.count_nonzero(self.storage)==0:
-                    self.re_pick()
+                    # self.re_pick()
+                    self.mainbucket_state = 5
+        
+        if self.mainbucket_state==5:
+            self.position_y = 18000.0
+            if not self.mission_get:
+                self.lock = True
+                self.position_z1 = -25500.0
+                self.position_z2 = -32000.0
+                self.position_z3 = -25500.0
+                self.mission_get = True
+            if self.current_position_z1==-25500.0 and self.current_position_z2==-29000.0 and self.current_position_z3==-25500.0:
+                self.position_z1 = -500.0
+                self.position_z2 = -500.0
+                self.position_z3 = -500.0
+                self.mainbucket_state = 4
         
         #-----------------------------deli--------------------------------#
         if self.mainbucket_state==4 and not self.mission_sent: #and self.mainros==2
